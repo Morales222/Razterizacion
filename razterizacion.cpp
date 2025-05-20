@@ -24,15 +24,15 @@ struct Triangle {
     Color color;
 };
 
-// Canvas dimensions
+// Canvas
 const int Cw = 400;
 const int Ch = 400;
 
-// Viewport dimensions
+// Viewport 
 const float Vw = 2.0f;
 const float viewportHeight = 2.0f;
 
-// Camera distance to projection plane
+// Camera distance
 const float d = 1.0f;
 
 // Translation vector for camera position or object
@@ -41,8 +41,8 @@ const Vertex T(-1.5f, 0.0f, 7.0f);
 // The actual pixel buffer for the canvas
 Color canvas[Cw * Ch];
 
-// Reset canvas to white color
-void ClearCanvas() {
+//  canvas in white color
+void Canvas() {
     Color white = {255, 255, 255};
     fill(canvas, canvas + Cw * Ch, white);
 }
@@ -69,7 +69,7 @@ Point ProjectVertex(Vertex v) {
     return ViewportToCanvas(px, py);
 }
 
-// Linear interpolation helper: from i0/d0 to i1/d1 generate values between
+// Linear interpolation helper
 vector<float> Interpolate(int i0, float d0, int i1, float d1) {
     vector<float> values;
     if (i0 == i1) {
@@ -148,7 +148,7 @@ void SaveCanvasToPPM(const string& filename) {
 }
 
 int main() {
-    ClearCanvas();
+    Canvas();
 
     // Base cube vertices
     vector<Vertex> baseVertices = {
@@ -162,7 +162,7 @@ int main() {
         { 1, -1, -1}   // 7
     };
 
-    // Some colors
+    //  colors
     Color red    = {255, 0, 0};
     Color green  = {0, 255, 0};
     Color blue   = {0, 0, 255};
@@ -170,7 +170,7 @@ int main() {
     Color purple = {128, 0, 128};
     Color cyan   = {0, 255, 255};
 
-    // Cube faces made of triangles (indices into baseVertices)
+    // Cube faces made of triangles
     vector<Triangle> triangles = {
         {{0, 1, 2}, red},
         {{0, 2, 3}, red},
@@ -186,17 +186,17 @@ int main() {
         {{2, 7, 3}, cyan}
     };
 
-    // Draw the base cube
+    // The base cube
     RenderObject(baseVertices, triangles);
 
-    // Draw a translated cube (shift +3 in X and +1 in Z)
+    // The translated cube (shift +3 in X and +1 in Z)
     vector<Vertex> translatedVerts;
     for (const auto& v : baseVertices) {
         translatedVerts.push_back(Vertex(v.x + 3.0f, v.y, v.z + 1.0f));
     }
     RenderObject(translatedVerts, triangles);
 
-    // Draw a scaled cube (scale factor 1.5)
+    // The scaled cube (scale factor 1.5)
     vector<Vertex> scaledVerts;
     float scaleFactor = 1.5f;
     for (const auto& v : baseVertices) {
